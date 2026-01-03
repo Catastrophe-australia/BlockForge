@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Interactive Scratch Block</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: #f0f0f0;
+  }
+  svg {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+</style>
+</head>
+<body>
+
+<svg id="scratchBlock" width="300" height="60" viewBox="0 -2 70 50" xmlns="http://www.w3.org/2000/svg">
+  <path id="blockPath"
+        fill="#ffab19"
+        stroke="#e69a17"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+</svg>
+
+<script>
+const svg = document.getElementById('scratchBlock');
+const path = document.getElementById('blockPath');
+
+const blockHeight = 46;     // total block height including notches
+const fillet = 5;           // corner radius
+const notchWidth = 6;       // width of puzzle bump
+const notchHeight = 6;      // depth of puzzle bump
+const startX = 0;
+const startY = 10;
+
+function updatePath(mouseX) {
+  // Clamp mouseX to be at least minimum width
+  const minWidth = 58; // enough for fillets + notch
+  const width = Math.max(mouseX, minWidth);
+
+  const p1 = `M ${startX} ${startY}`;               // move to top-left start
+  const p2 = `L 0 ${fillet}`;                       // vertical to top-left fillet
+  const p3 = `A ${fillet} ${fillet} 0 0 1 ${fillet} 0`; // top-left corner
+  const p4 = `L ${width - fillet - notchWidth*2} 0`;    // top line to notch start
+  const p5 = `L ${width - fillet - notchWidth} ${notchHeight}`; // notch diagonal up
+  const p6 = `L ${width - fillet} ${notchHeight}`;  // notch flat top
+  const p7 = `L ${width} 0`;                        // notch down to top line
+  const p8 = `L ${width - fillet} 0`;              // top-right before fillet
+  const p9 = `A ${fillet} ${fillet} 0 0 1 ${width} ${fillet}`; // top-right fillet
+  const p10 = `L ${width} ${blockHeight - fillet}`; // right edge
+  const p11 = `A ${fillet} ${fillet} 0 0 1 ${width - fillet} ${blockHeight}`; // bottom-right fillet
+  const p12 = `L ${fillet + notchWidth*2} ${blockHeight}`; // bottom line to notch start
+  const p13 = `L ${fillet + notchWidth} ${blockHeight + notchHeight}`; // bottom notch diagonal down
+  const p14 = `L ${fillet} ${blockHeight + notchHeight}`; // bottom notch flat
+  const p15 = `L 0 ${blockHeight}`;                // left bottom
+  const p16 = `A ${fillet} ${fillet} 0 0 1 0 ${blockHeight - fillet}`; // bottom-left fillet
+  const p17 = `L 0 ${startY}`;                     // back to start
+
+  path.setAttribute('d', [
+    p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17
+  ].join(' '));
+}
+
+// Initialize with a default width
+updatePath(60);
+
+// Update on mouse move
+document.addEventListener('mousemove', (e) => {
+  // Get mouse X relative to the SVG container
+  const mouseX = e.clientX - svg.getBoundingClientRect().left;
+  updatePath(mouseX);
+});
+</script>
+
+</body>
+</html>
