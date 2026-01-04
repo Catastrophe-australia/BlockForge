@@ -40,29 +40,30 @@ const startY = 10;
 
 function updatePath(mouseX) {
   // Clamp mouseX to be at least minimum width
-  const minWidth = 58; // enough for fillets + notch
+  const minWidth = 63; // enough for fillets + notch
   const width = Math.max(mouseX, minWidth);
 
-  const p1 = `M ${startX} ${startY}`;               // move to top-left start
-  const p2 = `L 0 ${fillet}`;                       // vertical to top-left fillet
-  const p3 = `A ${fillet} ${fillet} 0 0 1 ${fillet} 0`; // top-left corner
-  const p4 = `L ${width - fillet - notchWidth*2} 0`;    // top line to notch start
-  const p5 = `L ${width - fillet - notchWidth} ${notchHeight}`; // notch diagonal up
-  const p6 = `L ${width - fillet} ${notchHeight}`;  // notch flat top
-  const p7 = `L ${width} 0`;                        // notch down to top line
-  const p8 = `L ${width - fillet} 0`;              // top-right before fillet
-  const p9 = `A ${fillet} ${fillet} 0 0 1 ${width} ${fillet}`; // top-right fillet
-  const p10 = `L ${width} ${blockHeight - fillet}`; // right edge
-  const p11 = `A ${fillet} ${fillet} 0 0 1 ${width - fillet} ${blockHeight}`; // bottom-right fillet
-  const p12 = `L ${fillet + notchWidth*2} ${blockHeight}`; // bottom line to notch start
-  const p13 = `L ${fillet + notchWidth} ${blockHeight + notchHeight}`; // bottom notch diagonal down
-  const p14 = `L ${fillet} ${blockHeight + notchHeight}`; // bottom notch flat
-  const p15 = `L 0 ${blockHeight}`;                // left bottom
-  const p16 = `A ${fillet} ${fillet} 0 0 1 0 ${blockHeight - fillet}`; // bottom-left fillet
-  const p17 = `L 0 ${startY}`;                     // back to start
+  const p1 = `M 0 10`;               // move to top-left start
+  const p2 = `L 0 5`;                       // vertical to top-left fillet
+  const p3 = `A 5 5 0 0 1 5 0`; // top-left corner
+  const p4 = `L 20 0`;    // top line to notch start
+  const p5 = `L 26 6`; // notch diagonal up
+  const p6 = `L 37 6`;  // notch flat top
+  const p7 = `L 43 0`;                        // notch down to top line
+  const p8 = `L ${width - 5} 0`;              // top-right before fillet
+  const p9 = `A 5 5 0 0 1 ${width} 5`; // top-right fillet
+  const p10 = `L ${width} 35`; // right edge
+  const p11 = `A 5 5 0 0 1 ${width - 5} 40`; // bottom-right fillet
+  const p12 = `L 43 40`; // bottom line to notch start
+  const p13 = `L 37 46`; // bottom notch diagonal down
+  const p14 = `L 26 46`; // bottom notch flat
+  const p15 = `L 20 40`;                // left bottom
+  const p16 = `L 5 40`; // bottom-left fillet
+  const p17 = `A 5 5 0 0 1 0 35`; 
+  const p18 = `L 0 10`; // back to start
 
   path.setAttribute('d', [
-    p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17
+    p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,p18
   ].join(' '));
 }
 
